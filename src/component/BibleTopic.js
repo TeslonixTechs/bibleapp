@@ -36,7 +36,7 @@ const BibleTopic = () => {
       </div>
       
       </div>
-      <div className='flex flex-col gap-2 justify-center w-screen pt-44 pb-36 bg-slate-100 px-1'>
+      <div className='flex flex-col gap-2 justify-center w-screen pt-48 pb-36 bg-slate-100 px-1'>
       <div className='h-fit px-2'>
         <div className='flex gap-2'>
           <div>AIMS:</div>
