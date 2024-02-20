@@ -35,7 +35,7 @@ const BibleStudy = () => {
     <div>
         <div className='w-screen flex bg-slate-100 flex-col justify-center gap-4 py-3 px-2 py-36 h-fit pb-36'>
             {data.map((item,index)=>(
-                <div onClick={()=>handlestudy(item.DATE)} className='h-33 w-88 border flex flex-col gap-1 py-8 text-2xl px-2 border-black rounded-lg'>
+                <div onClick={()=>handlestudy(item.DATE)} className={`h-33 w-88 pl-3 rounded-xl border text-white flex flex-col gap-1 py-8 text-2xl px-2rounded-lg ${index % 2 === 0 ? 'bg-amber-500' : 'bg-green-950'}`}>
                     <div>DATE: {item.DATE}</div>
                     TOPIC: {item.TOPIC}
                 </div>

@@ -115,7 +115,7 @@ export default Chapters;
   return (
     <div className='bg-slate-100 h-screen w-screen'>
         <div className='w-screen flex justify-center'>
-        <div className='flex flex-wrap justify-center w-72 gap-5 bg-slate-100 h-fit pt-48 pb-36'>
+        <div className='flex flex-wrap justify-center w-72 gap-5 bg-slate-100 h-fit pt-56 pb-36'>
             {getarraychap.map((item,index)=>(
                 <div onClick={()=>handlechapter(item)} className={`flex justify-center h-12 rounded-2xl flex justify-center items-center w-12 text-2xl text-white ${index % 2 === 0 ? 'bg-amber-500' : 'bg-green-950'}`}>{item}</div>
             ))}

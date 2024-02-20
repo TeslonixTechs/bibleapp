@@ -25,18 +25,18 @@ const BibleTopic = () => {
   return (
     <div clasName="h-screen w-screen bg-slate-100">
       <div className='fixed bg-slate-100 top-0 w-screen py-3 h-fit'>
-      <div className='bg-slate-100 flex justify-center w-full'>
+      <div className='bg-slate-100 flex fixed justify-center w-full'>
         {data.map((item)=>(
-          <div className='w-full flex flex-col px-1'>
-            <div className='text-2xl'>DATE :{item.DATE}</div>
-            <div className='text-xl'>TOPIC: {item.TOPIC}</div>
-            <div className='text-xl'>TEXT: {item.TEXTS}</div>
+          <div className='w-screen flex justify-center items-center gap-2 flex-col px-1'>
+            <div className='text-3xl font-semibold bg-green-950 mb-5 h-16 py-2 w-64 rounded-xl flex justify-center items-center text-slate-200 text-center'>{item.DATE}</div>
+            <div className='text-xl'>{item.TOPIC.toUpperCase()}</div>
+            <div className='text-xl'>{item.TEXTS.toUpperCase()}</div>
           </div>
         ))}
       </div>
       
       </div>
-      <div className='flex flex-col gap-2 justify-center w-screen pt-36 pb-36 bg-white px-1'>
+      <div className='flex flex-col gap-2 justify-center w-screen pt-44 pb-36 bg-slate-100 px-1'>
       <div className='h-fit px-2'>
         <div className='flex gap-2'>
           <div>AIMS:</div>

@@ -18,7 +18,7 @@ const BibleApp = () => {
             <div>
               <div className='text-lg text-cyan-400'>Powered by:</div>
               <div className='text-white pl-2 text-sm'>Christ Apostolic Church</div>
-              <div className='text-white text-xs pl-2'>One fold one sheperd</div>
+              <div className='text-white text-xs pl-2'>One fold one sherperd</div>
             </div>
         </div> */}
     </div>
