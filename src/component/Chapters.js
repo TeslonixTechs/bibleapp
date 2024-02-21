@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Biblelist from './JSON/Biblelist.json'
 import { useNavigate, useParams } from 'react-router-dom'
 import bar from './Images/download (1).png'
+import Bibleverse from './JSON/Bibleverse.json'
 const Chapters = () => {
     /*
     import React, { useState, useEffect } from 'react';
@@ -45,6 +46,7 @@ export default Chapters;
     const [currentBookIndex, setCurrentBookIndex] = useState(0);
     const [nochapters,setnochapters] = useState("")
     const [getarraychap,setgetarraycap]= useState([])
+    const [getvalue,setgetvalue] = useState("")
     const getmydata=()=>{
         const data = Biblelist.books.filter((item)=>(
             item.book===book
@@ -112,6 +114,70 @@ export default Chapters;
         
         
     }
+    const getsearch = (e)=>{
+        const value = e.target.value
+        setgetvalue(value)
+    }
+    const [fetchchapter,setfetchapter]=useState([])
+    const fetchData = () => {
+       const fetchmydata = Bibleverse.books.filter((item)=>(
+        item.book===book
+       ))
+       const fetchchapter = fetchmydata[0].chapters.verses
+       setfetchapter([fetchchapter])
+    };
+    useEffect(()=>{
+        fetchData()
+    },[])
+    const [message,setmessage] = useState("e.g 12vs1")
+    const startsearch = ()=>{
+        const searchdata = getvalue.split("vs")
+        console.log(searchdata)
+        const mychapter = searchdata[0]
+        const myverse = searchdata[1]
+        // localStorage.setItem('searchchapter',JSON.stringify(searchdata[0]))
+        // localStorage.setItem('')
+        // if (isNaN,mychapter){
+        //     setmessage("Invalid search Enter search in format 12vs1")
+        //     return
+        // }
+        // else if(!isNaN,mychapter){
+        //     if(searchdata.length>1){
+        //         navigate(`/${book}/${mychapter}/${myverse}`)
+        //     }
+        //     else{
+        //         setmessage("Enter search in format 12vs1")
+        //     }
+        // }
+       if(searchdata.length>1){
+        if(!isNaN(mychapter)){
+           if(mychapter>nochapters){
+                setmessage("Chapter does not exist")
+           }
+           else{
+            if(!isNaN(myverse)){
+                if(myverse>fetchchapter.length){
+                    setmessage("Verse does not exist")
+                }
+                else{
+                    navigate(`/${book}/${mychapter}/${myverse}`)
+                }
+            }
+            else{
+                setmessage("Invalid Verse")
+            }
+           }
+        }
+        else{
+            setmessage("Invalid Chapter")
+        }
+       }
+       else{
+        setmessage("Enter search in format 12vs1")
+       }
+       
+    }
+
   return (
     <div className='bg-slate-100 h-screen w-screen'>
         <div className='w-screen flex justify-center'>
@@ -133,8 +199,8 @@ export default Chapters;
                 <div onClick={handleRightArrowClick} className='bg-green-950 h-8 active:bg-amber-500 rounded-full w-8 flex justify-center items-center'><span className='fas fa-arrow-right text-2xl text-slate-100'></span></div>
             </div>
             <div className='text-3xl pl-5 flex items-center w-screen'><img src={bar} className='h-8 w-8' />List of Chapter</div>
-            <div className='text-red-500 pl-4'>e.g 12vs1</div>
-            <div className='flex justify-center w-screen gap-2'><input placeholder={`Search in ${book} for chapter and verse`} className="border focus:placeholder:invisible pl-1 outline-0 bg-slate-100 h-10 rounded-lg w-64 border-black"/><div className='bg-orange-500 rounded-md flex justify-center items-center w-16 h-10'><span className='bg-white rounded-full flex justify-center items-center h-6 w-6'><span className='fas fa-arrow-right text-orange-500 text-lg'></span></span></div></div>
+            <div className='text-red-500 pl-4'>{message}</div>
+            <div className='flex justify-center w-screen gap-2'><input onChange={getsearch} placeholder={`Search in ${book} for chapter and verse`} className="border focus:placeholder:invisible pl-1 outline-0 bg-slate-100 h-10 rounded-lg w-64 border-black"/><div onClick={startsearch} className='bg-orange-500 rounded-md flex justify-center items-center w-16 h-10'><span className='bg-white rounded-full flex justify-center items-center h-6 w-6'><span className='fas fa-arrow-right text-orange-500 text-lg'></span></span></div></div>
         </div>
            </div>
   )

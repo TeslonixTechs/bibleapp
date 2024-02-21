@@ -28,7 +28,7 @@ const BibleTopic = () => {
       <div className='bg-slate-100 flex fixed justify-center w-full'>
         {data.map((item)=>(
           <div className='w-screen flex justify-center items-center gap-2 flex-col px-1'>
-            <div className='text-3xl font-semibold bg-green-950 mb-5 h-16 py-2 w-64 rounded-xl flex justify-center items-center text-slate-200 text-center'>{item.DATE}</div>
+            <div onClick={()=>navigate('/biblestudy')} className='text-3xl font-semibold bg-green-950 mb-5 h-16 py-2 w-64 rounded-xl flex justify-center items-center text-slate-200 text-center'>{item.DATE}</div>
             <div className='text-xl'>{item.TOPIC.toUpperCase()}</div>
             <div className='text-xl'>{item.TEXTS.toUpperCase()}</div>
           </div>

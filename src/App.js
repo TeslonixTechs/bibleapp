@@ -8,6 +8,7 @@ import Chapters from './component/Chapters';
 import BibleVerse from './component/BibleVerse';
 import BibleStudy from './component/BibleStudy';
 import BibleTopic from './component/BibleTopic';
+import SearchVerse from './component/SearchVerse';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
            <Route path='/:book' element={<Chapters/>}/>   
            <Route path='/:book/:verse' element={<BibleVerse/>}/>   
            <Route path='chapter/:book/:nextChapter' element={<BibleVerse/>}/>
+           <Route path='/:book/:mychapter/:myverse' element={<SearchVerse/>}/>
            <Route path='/biblestudy' element={<BibleStudy/>}/>
            <Route path='/Biblestudy/:date' element={<BibleTopic/>}/>
         </Routes>
