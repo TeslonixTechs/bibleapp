@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Biblelist from './JSON/Biblelist.json'
 import { useNavigate, useParams } from 'react-router-dom'
 import bar from './Images/download (1).png'
-import Bibleverse from './JSON/Bibleverse.json'
+import books from './JSON/Bibleverse.json'
 const Chapters = () => {
     /*
     import React, { useState, useEffect } from 'react';
@@ -94,6 +94,9 @@ export default Chapters;
        
     }
     const handleRightArrowClick = ()=>{
+        if(currentBookIndex===65){
+            return
+        }
         if (currentBookIndex!==63) {
             const newIndex = (currentBookIndex === Biblelist.books.length - 1) ? 0 : currentBookIndex + 1;
             setCurrentBookIndex(newIndex)
@@ -118,17 +121,7 @@ export default Chapters;
         const value = e.target.value
         setgetvalue(value)
     }
-    const [fetchchapter,setfetchapter]=useState([])
-    const fetchData = () => {
-       const fetchmydata = Bibleverse.books.filter((item)=>(
-        item.book===book
-       ))
-       const fetchchapter = fetchmydata[0].chapters.verses
-       setfetchapter([fetchchapter])
-    };
-    useEffect(()=>{
-        fetchData()
-    },[])
+    
     const [message,setmessage] = useState("e.g 12vs1")
     const startsearch = ()=>{
         const searchdata = getvalue.split("vs")
@@ -149,6 +142,10 @@ export default Chapters;
         //         setmessage("Enter search in format 12vs1")
         //     }
         // }
+        // const getChapter = books.books.find(b => b.book === book);
+        // const totalChapters = getChapter.chapters.length;
+        // const gettotalverse = books.books.chapters.find(b => b.chapter === mychapter);
+        // 
        if(searchdata.length>1){
         if(!isNaN(mychapter)){
            if(mychapter>nochapters){
@@ -156,12 +153,7 @@ export default Chapters;
            }
            else{
             if(!isNaN(myverse)){
-                if(myverse>fetchchapter.length){
-                    setmessage("Verse does not exist")
-                }
-                else{
-                    navigate(`/${book}/${mychapter}/${myverse}`)
-                }
+                navigate(`/${book}/${mychapter}/${myverse}`)
             }
             else{
                 setmessage("Invalid Verse")

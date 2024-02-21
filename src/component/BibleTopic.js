@@ -11,6 +11,7 @@ const BibleTopic = () => {
       const getmydata = bibledata.filter((item)=>(
         item.DATE===date
       ))
+      
       setdata(getmydata)
     }
     useEffect(()=>{
@@ -21,7 +22,32 @@ const BibleTopic = () => {
     console.log(aimdata)
     const finalaimdata = aimdata.split(";")
     console.log(finalaimdata)
- console.log(data)
+    console.log(data)
+    const extractverse = ()=>{
+      const pattern = /\b(?:\d{1,2}\s)?(?:[a-zA-Z]+\s)?\d{1,3}:(?:\d{1,3})(?:-\d{1,3})?\b/g;
+      let verses = [];
+    data.forEach(item => {
+      const matches = item.text.match(pattern);
+      if (matches) {
+        verses = verses.concat(matches);
+        console.log(verses)
+      }
+    });
+    }
+    const getverses = ()=>{
+      const pattern = /\b(?:\d{1,2}\s)?(?:[a-zA-Z]+\s)?\d{1,3}:(?:\d{1,3})(?:-\d{1,3})?\b/g;
+      let verses = [];
+      data.forEach(item => {
+        const matches = item.INTRODUCTION.match(pattern);
+        if (matches) {
+          verses = verses.concat(matches);
+        }
+        console.log(verses)
+    })
+  }
+    useEffect(()=>{
+      getverses()
+    },[])
   return (
     <div clasName="h-screen w-screen bg-slate-100">
       <div className='fixed bg-slate-100 top-0 w-screen py-3 h-fit'>
