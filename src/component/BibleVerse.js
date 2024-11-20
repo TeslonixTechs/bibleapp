@@ -163,7 +163,7 @@ const Bibleverse = () => {
 					></i>
 				</div>
 			</div>
-			<div style={{fontSize:fontsize[count-1]}} className="pt-32 flex flex-col pb-48">
+			<div style={{fontSize:fontsize[count-1]}} className="pt-32 bg-white h-fit w-screen flex flex-col pb-48">
 				{data.map((verse) => (
 					<div key={verse.verse}>
 						<span className="font-bold mr-1">{verse.verse}.</span>

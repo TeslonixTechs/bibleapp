@@ -9,26 +9,29 @@ const SearchVerse = () => {
     const [isNextDisabled, setIsNextDisabled] = useState(false);
     const [count,setcount]=useState(1)
     const fontsize = ['10px','12px','14px','16px','24px']
-    const fetchData = () => {
-        try {
-            const bookSearch = books.books.find(b => b.book === book);
+   const fetchData = () => {
+    try {
+        const bookSearch = books.books.find(b => b.book === book);
 
-            if (bookSearch) {
-                const chapterData = bookSearch.chapters.find(chap => chap.chapter ===mychapter);
+        if (bookSearch) {
+            const chapterData = bookSearch.chapters.find(chap => chap.chapter === mychapter);
 
-                if (chapterData) {
-                    const verseData = chapterData.verses.find(verse => verse.verse===myverse)
-                    setData(verseData)
-                } else {
-                    console.error(`Chapter ${mychapter} not found in book ${book}.`);
-                }
+            if (chapterData) {
+                const verseIndex = parseInt(myverse, 10) - 1; // Adjust for zero-based index
+                console.log(chapterData.verses.slice(verseIndex))
+                const versesFromIndex = chapterData.verses.slice(verseIndex); // Get verses starting from the specified index
+                setData(versesFromIndex);
             } else {
-                console.error(`Book ${book} not found.`);
+                console.error(`Chapter ${mychapter} not found in book ${book}.`);
             }
-        } catch (error) {
-            console.log('Error fetching chapter data:', error);
+        } else {
+            console.error(`Book ${book} not found.`);
         }
-    };
+    } catch (error) {
+        console.log('Error fetching chapter data:', error);
+    }
+};
+
     const handlecountplus=()=>{
         if(count>4){
             return count<6
@@ -88,7 +91,7 @@ const SearchVerse = () => {
                 
                     </div>
         </div>
-            <div className="flex items-center py-7 w-full items-center fixed bg-slate-100 top-24 justify-center gap-6">
+        <div className="flex items-center py-7 w-full items-center fixed bg-slate-100 top-24 justify-center gap-6">
                 
 				<div className='bg-amber-500 w-9 h-9 justify-center flex items-center rounded-full '>
 					<i
@@ -106,22 +109,17 @@ const SearchVerse = () => {
 					disabled={isNextDisabled}
 					></i>
 				</div>
-			</div>
-			<div style={{fontSize:fontsize[count-1]}} className="pt-52 flex flex-col pb-48">
-                <div className="bg-yellow-300 h-fit w-screen py-3">
-                <span>{data.verse}.</span>
-                <span>{data.text}</span>
-                </div>
-				{/* {data.map((item) => (
-					<div key={item[0]}>
-						<span className="font-bold mr-1">{item.verse}.</span>
-						<span>{item.text}</span>
-					</div>
-				))} */}
-			</div>
-			
-          
-	</div>
+		</div>
+		<div style={{ fontSize: fontsize[count - 1] }} className="pt-52 flex flex-col pb-48">
+                 {data.map((item, index) => (
+                    <div key={index} className={item.verse === myverse ? 'bg-yellow-300' : ''}>
+                        <span className="font-bold mr-1">{item.verse}.</span>
+                        <span>{item.text}</span>
+                    
+                    </div>
+                ))}
+        </div>
+    </div>
   )
 }
 

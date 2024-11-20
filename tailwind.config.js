@@ -8,6 +8,14 @@ module.exports = {
       backgroundImage :{
         "mybg":"url('./component/Images/mybg.jpg')"
       },
+      colors: {
+        accent: "#179957",
+        accentDark: "#184D47",
+      },
+      container: {
+        center: true,
+        padding: "15px"
+      },
     },
   },
   plugins: [],

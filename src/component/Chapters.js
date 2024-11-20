@@ -5,48 +5,14 @@ import { useNavigate, useParams } from 'react-router-dom'
 import bar from './Images/download (1).png'
 import books from './JSON/Bibleverse.json'
 const Chapters = () => {
-    /*
-    import React, { useState, useEffect } from 'react';
-import Biblelist from './JSON/Biblelist.json';
-import { useNavigate, useParams } from 'react-router-dom';
-
-const Chapters = () => {
-    const { book } = useParams();
-    const navigate = useNavigate();
-    const [currentBookIndex, setCurrentBookIndex] = useState(0);
-
-    // Find the index of the current book in the Biblelist
-    
-
-    const handleLeftArrowClick = () => {
-        const newIndex = (currentBookIndex === 0) ? Biblelist.books.length - 1 : currentBookIndex - 1;
-        navigate(`/Chapters/${Biblelist.books[newIndex].book}`);
-    };
-
-    const handleRightArrowClick = () => {
-        const newIndex = (currentBookIndex === Biblelist.books.length - 1) ? 0 : currentBookIndex + 1;
-        navigate(`/Chapters/${Biblelist.books[newIndex].book}`);
-    };
-
-    return (
-        <div>
-            <h1>Chapters of {book}</h1>
-            <div>
-                <button onClick={handleLeftArrowClick}>Previous Book</button>
-                <button onClick={handleRightArrowClick}>Next Book</button>
-            </div>
-        </div>
-    );
-};
-
-export default Chapters;
-*/
     const {book} = useParams()
     const navigate = useNavigate()
     const [currentBookIndex, setCurrentBookIndex] = useState(0);
     const [nochapters,setnochapters] = useState("")
     const [getarraychap,setgetarraycap]= useState([])
     const [getvalue,setgetvalue] = useState("")
+    const [mychapter, setmychapter] = useState("")
+    const [searchdata,setsearchdata] = useState("")
     const getmydata=()=>{
         const data = Biblelist.books.filter((item)=>(
             item.book===book
@@ -121,39 +87,64 @@ export default Chapters;
         const value = e.target.value
         setgetvalue(value)
     }
-    
+    const [myverse,setmyverse] = useState("")
+    const [searchverse,setgetverse] = useState("");
     const [message,setmessage] = useState("e.g 12vs1")
-    const startsearch = ()=>{
+    const setverse = ()=>{
         const searchdata = getvalue.split("vs")
+        setsearchdata(searchdata)
         console.log(searchdata)
         const mychapter = searchdata[0]
+        setmychapter(mychapter)
         const myverse = searchdata[1]
-        // localStorage.setItem('searchchapter',JSON.stringify(searchdata[0]))
-        // localStorage.setItem('')
-        // if (isNaN,mychapter){
-        //     setmessage("Invalid search Enter search in format 12vs1")
-        //     return
-        // }
-        // else if(!isNaN,mychapter){
-        //     if(searchdata.length>1){
-        //         navigate(`/${book}/${mychapter}/${myverse}`)
-        //     }
-        //     else{
-        //         setmessage("Enter search in format 12vs1")
-        //     }
-        // }
-        // const getChapter = books.books.find(b => b.book === book);
-        // const totalChapters = getChapter.chapters.length;
-        // const gettotalverse = books.books.chapters.find(b => b.chapter === mychapter);
+        setmyverse(myverse)
+        
+        const getChapter = books.books.find(b => b.book === book);
+        const totalChapters = getChapter.chapters.length;
+         if(mychapter>totalChapters){
+            setmessage("Chapter does not exist")
+            return
+        }
+        else{
+            const getVerse = getChapter.chapters.filter(b => b.chapter === mychapter)
+            setgetverse(getVerse)
+        }
+    }
+    useEffect(()=>{
+        setverse()
+    },[getvalue])
+    const startsearch = ()=>{
+        
+        const getChapter = books.books.find(b => b.book === book);
+        const totalChapters = getChapter.chapters.length;
+        
+        if(mychapter>totalChapters){
+            setmessage("Chapter does not exist")
+            return
+        }
+        else{
+            const getVerse = getChapter.chapters.filter(b => b.chapter === mychapter)
+            setgetverse(getVerse)
+        }
+        const totalVerse = searchverse[0].verses.length;
+        console.log(getChapter)
+        console.log(searchverse)
+        console.log(totalVerse)
         // 
        if(searchdata.length>1){
         if(!isNaN(mychapter)){
            if(mychapter>nochapters){
                 setmessage("Chapter does not exist")
+                return
            }
            else{
             if(!isNaN(myverse)){
-                navigate(`/${book}/${mychapter}/${myverse}`)
+                if(myverse<=totalVerse){
+                    navigate(`/${book}/${mychapter}/${myverse}`)
+                }
+                else {
+                    setmessage("Verse does not exist")
+                }
             }
             else{
                 setmessage("Invalid Verse")
@@ -169,7 +160,7 @@ export default Chapters;
        }
        
     }
-
+    console.log(searchverse)
   return (
     <div className='bg-slate-100 h-screen w-screen'>
         <div className='w-screen flex justify-center'>

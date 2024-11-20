@@ -6,7 +6,7 @@ const BibleApp = () => {
   const gotopage = ()=>{
     setTimeout(()=>{
       navigate('/page')
-    },3000)
+    },5000)
   }
   useEffect(()=>{
     gotopage()

@@ -1,98 +1,97 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import Biblestudy from './JSON/biblestudy2024.json'
-const BibleTopic = () => {
-    const navigate=useNavigate();
-    const {date} = useParams();
-    console.log(date)
-    const [bibledata,setbibledata] = useState(Biblestudy)
-    const [data,setdata] = useState([])
-    const handlebibledata = ()=>{
-      const getmydata = bibledata.filter((item)=>(
-        item.DATE===date
-      ))
-      
-      setdata(getmydata)
-    }
-    useEffect(()=>{
-      handlebibledata()
-    },[date])
-    const aims = data.map((item)=>(item.AIMS))
-    const aimdata = aims.toString()
-    console.log(aimdata)
-    const finalaimdata = aimdata.split(";")
-    console.log(finalaimdata)
-    console.log(data)
-    const extractverse = ()=>{
-      const pattern = /\b(?:\d{1,2}\s)?(?:[a-zA-Z]+\s)?\d{1,3}:(?:\d{1,3})(?:-\d{1,3})?\b/g;
-      let verses = [];
-    data.forEach(item => {
-      const matches = item.text.match(pattern);
-      if (matches) {
-        verses = verses.concat(matches);
-        console.log(verses)
-      }
-    });
-    }
-    const getverses = ()=>{
-      const pattern = /\b(?:\d{1,2}\s)?(?:[a-zA-Z]+\s)?\d{1,3}:(?:\d{1,3})(?:-\d{1,3})?\b/g;
-      let verses = [];
-      data.forEach(item => {
-        const matches = item.INTRODUCTION.match(pattern);
-        if (matches) {
-          verses = verses.concat(matches);
-        }
-        console.log(verses)
-    })
-  }
-    useEffect(()=>{
-      getverses()
-    },[])
-  return (
-    <div clasName="h-screen w-screen bg-slate-100">
-      <div className='fixed bg-slate-100 top-0 w-screen py-3 h-fit'>
-      <div className='bg-slate-100 flex fixed justify-center w-full'>
-        {data.map((item)=>(
-          <div className='w-screen flex justify-center items-center gap-2 flex-col px-1'>
-            <div onClick={()=>navigate('/biblestudy')} className='text-3xl font-semibold bg-green-950 mb-5 h-16 py-2 w-64 rounded-xl flex justify-center items-center text-slate-200 text-center'>{item.DATE}</div>
-            <div className='text-xl'>{item.TOPIC.toUpperCase()}</div>
-            <div className='text-xl'>{item.TEXTS.toUpperCase()}</div>
-          </div>
-        ))}
-      </div>
-      
-      </div>
-      <div className='flex flex-col gap-2 justify-center w-screen pt-48 pb-36 bg-slate-100 px-1'>
-      <div className='h-fit px-2'>
-        <div className='flex gap-2'>
-          <div>AIMS:</div>
-          <div>
-          {finalaimdata.map((item)=>(
-          <div>{item}</div>
-        ))
-       }
-          </div>
-      </div>
-      <div></div>
-       
-        </div>
-      {data.map((item,index)=>(
-          <div className='flex flex-col gap-4'>
-            <div>INTRODUCTION: {item.INTRODUCTION}</div>
-            <div>STUDY GUIDES: {item.STUDYGUIDES}</div>
-            <div>FOOD FOR THOUGHTS: {item.FOODFORTHOUGHTS}</div>
-            <div>MEMORY VERSE: {item.MEMORYVERSE}</div>
-            <div>CONCLUSION: {item.CONCLUSION}</div>
-          </div>
-    
-        ))}
-      </div>
-         <div className="fixed bottom-0 bg-green-950 h-24 flex px-2 justify-between w-screen items-center">
-            <div onClick={()=>navigate('/biblestudy')} className="h-12 w-12 flex justify-center items-center rounded-full bg-amber-500"><span className="fas fa-arrow-left text-4xl text-green-950"></span></div>
-            <div onClick={()=>navigate('/page')}><span className="fas fa-home text-5xl text-amber-500"></span></div>
-        </div>
-    </div>
-  )
-}
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 
-export default BibleTopic;
+const BibleGuide = ()=>{
+const date = useParams()
+console.log(date)
+const [bibleData, setBibleData] = useState(Biblestudy);
+const [data, setData] = useState([]);
+const navigate = useNavigate();
+
+
+
+const handleBibleData = () => {
+    const filteredData = bibleData.filter(item => item.DATE === date);
+    setData(filteredData);
+};
+useEffect(() => {
+handleBibleData();
+}, [date]);
+
+const fontsize = [10,12,14,16,24]
+const [count,setcount] = useState(1)
+console.log(data)
+const handlecountplus=()=>{
+if(count>4){
+    return count<6
+}
+setcount(add=>add+1)
+
+if(count===5){
+    return
+}
+}
+const handlecountminus=()=>{
+if(count<2){
+    return
+}
+setcount(add=>add-1)
+if(count===1){
+    return
+}
+}
+    return( 
+        <div className="h-full w-screen flex flex-col bg-green-900">
+            <div className="bg-yellow-500 h-20  w-screen flex justify-end pb-2">
+                <span className="text-green-900 font-bold text-3xl text-center">The Christain Race</span>
+           </div>
+           <scroll className="flex-1 py-5 pl-1.5">
+            <div>
+            {data.length === 0 ? (
+                <div style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <span>No Bible study data available for this date.</span>
+                </div>
+            ) : (
+                <div style={{ flex: 1, paddingBottom: 45 }}>
+                    {data.map((item, index) => (
+                        <div key={index} className="justify-center flex gap-4 w-screen items-center">
+                          <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">{item['DATE']}</span></div>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">TOPIC</span></div>
+                            <div className="w-72 h-16 bg-white rounded-xl flex items-center justify-center"><span className="text-xl">{item['TOPIC'].toUpperCase()}</span></div>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-xl font-bold">TEXT</span></div>
+                            <div className="w-72 h-16 bg-white rounded-2xl flex items-center justify-center"><span className="text-xl">{item['TEXTS']}</span></div>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">AIMS</span></div>
+                            <scroll className="w-72 h-fit py-2 px-2 bg-white rounded-2xl"><span style={{fontSize:fontsize[count-1]}}>{item['AIMS']}</span></scroll>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">INTRODUCTION</span></div>
+                            <scroll className="w-72 h-fit py-2 px-2 bg-white rounded-2xl"><span style={{fontSize:fontsize[count-1]}}>{item['INTRODUCTION']}</span></scroll>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">STUDY GUIDES</span></div>
+                            <scroll className="w-72 h-fit py-2 px-2 bg-white rounded-2xl"><span style={{fontSize:fontsize[count-1]}}>{item['STUDY GUIDES']}</span></scroll>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">FOOD FOR THOUGHTS</span></div>
+                            <scroll className="w-72 h-fit py-2 px-2 bg-white rounded-2xl"><span style={{fontSize:fontsize[count-1]}}>{item['FOOD FOR THOUGHTS']}</span></scroll>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">CONCLUSION</span></div>
+                            <scroll className="w-72 h-fit py-2 px-2 bg-white rounded-2xl"><span style={{fontSize:fontsize[count-1]}}>{item['CONCLUSION']}</span></scroll>
+                            <div className="bg-amber-500 rounded-2xl flex justify-center items-center  h-10 w-72"><span className="text-2xl font-bold">MEMORYVERSE</span></div>
+                            <scroll className="w-72 h-fit py-2 px-2 bg-white rounded-2xl"><span style={{fontSize:fontsize[count-1]}}>{item['MEMORY VERSE']}</span></scroll>
+                            
+                        </div>
+                    ))}
+                </div>
+            )}
+            </div>
+           </scroll>
+           <div className="flex flex-row gap-3 w-screen h-fit py-2 bg-green-900 items-center justify-center ">
+            <button className=" items-center bg-amber-500 h-10 rounded-xl w-10 flex justify-center" onPress={handlecountminus}><span  className="text-black text-[30px]"></span></button>
+            <div className="flex justify-center w-fit items-center h-fit gap-1"><span className="text-lg">fontsize</span><span className="text-3xl">{count}</span></div>
+            <button onPress={handlecountplus} className=" items-center bg-amber-500 h-10 rounded-xl w-10 flex justify-center"><span  className="text-black text-[30px]"></span></button>
+          </div>
+           <div className="h-24 w-screen flex flex-row bg-green-950 py-5 px-3 justify-between">
+                <button onPress={() => navigate("Study")} className="h-12 w-12 rounded-full bg-amber-500 flex justify-center items-center">
+                    <span className="fas fa-arrow-left fa-2x"></span>
+                </button>
+                <span onPress={() =>{navigate("/page")}} className="fas fa-home"></span>
+          </div>
+        </div>
+    )
+}
+export default BibleGuide;

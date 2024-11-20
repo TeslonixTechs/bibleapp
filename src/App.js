@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import BibleApp from './component/BibleApp';
-import BibleList from './component/BibleList';
 import BiblePage from './component/BiblePage';
+import BibleList from './component/BibleList';
 import Chapters from './component/Chapters';
 import BibleVerse from './component/BibleVerse';
 import BibleStudy from './component/BibleStudy';
@@ -13,7 +13,7 @@ import SearchVerse from './component/SearchVerse';
 
 function App() {
   return (
-    <Router>
+       <Router>
         <Routes>
            <Route exact path='/' element={<BibleApp/>}/>
            <Route exact path='/page' element={<BiblePage/>}/>
